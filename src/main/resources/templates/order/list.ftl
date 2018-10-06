@@ -4,10 +4,10 @@
 <body>
 <div id="wrapper" class="toggled">
 
-    <#--边栏sidebar-->
-    <#include "../common/nav.ftl">
+<#--边栏sidebar-->
+<#include "../common/nav.ftl">
 
-    <#--主要内容content-->
+<#--主要内容content-->
     <div id="page-content-wrapper">
         <div class="container-fluid">
             <div class="row clearfix">
@@ -91,10 +91,12 @@
                 </h4>
             </div>
             <div class="modal-body">
-                你有新的订单
+                你有新的订单:<span id="orderId"></span>
             </div>
             <div class="modal-footer">
-                <button onclick="javascript:document.getElementById('notice').pause()" type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button onclick="javascript:document.getElementById('notice').pause()" type="button"
+                        class="btn btn-default" data-dismiss="modal">关闭
+                </button>
                 <button onclick="location.reload()" type="button" class="btn btn-primary">查看新的订单</button>
             </div>
         </div>
@@ -103,42 +105,43 @@
 
 <#--播放音乐-->
 <audio id="notice" loop="loop">
-    <source src="/sell/mp3/song.mp3" type="audio/mpeg" />
+    <source src="/sell/mp3/song.mp3" type="audio/mpeg"/>
 </audio>
 
-<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
-<script src="https://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script>
     var websocket = null;
-    if('WebSocket' in window) {
-        websocket = new WebSocket('ws://sell.natapp4.cc/sell/webSocket');
-    }else {
+    if ('WebSocket' in window) {
+        websocket = new WebSocket('ws://sell.gabear.xyz:8080/sell/webSocket');
+    } else {
         alert('该浏览器不支持websocket!');
     }
 
     websocket.onopen = function (event) {
         console.log('建立连接');
-    }
+    };
 
     websocket.onclose = function (event) {
         console.log('连接关闭');
-    }
+    };
 
     websocket.onmessage = function (event) {
-        console.log('收到消息:' + event.data)
-        //弹窗提醒, 播放音乐
+        console.log('收到消息:' + event.data);
+        $('#orderId').text(event.data);
+        // 弹窗提醒
         $('#myModal').modal('show');
-
+        // 播放音乐
         document.getElementById('notice').play();
-    }
+    };
 
     websocket.onerror = function () {
         alert('websocket通信发生错误！');
-    }
+    };
 
     window.onbeforeunload = function () {
         websocket.close();
-    }
+    };
 
 </script>
 

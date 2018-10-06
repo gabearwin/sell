@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 /**
+ * 微信商户信息
  * Created by 廖师兄
  * 2017-07-04 01:05
  */

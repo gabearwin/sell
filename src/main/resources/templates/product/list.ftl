@@ -4,10 +4,10 @@
 <body>
 <div id="wrapper" class="toggled">
 
-    <#--边栏sidebar-->
+<#--边栏sidebar-->
     <#include "../common/nav.ftl">
 
-    <#--主要内容content-->
+<#--主要内容content-->
     <div id="page-content-wrapper">
         <div class="container-fluid">
             <div class="row clearfix">
@@ -60,21 +60,33 @@
                     <#if currentPage lte 1>
                         <li class="disabled"><a href="#">上一页</a></li>
                     <#else>
-                        <li><a href="/sell/seller/order/list?page=${currentPage - 1}&size=${size}">上一页</a></li>
+                        <li><a href="/sell/seller/product/list?page=${currentPage - 1}&size=${size}">上一页</a></li>
                     </#if>
-
+                    <#assign leftflag = 1>
+                    <#assign rightflag = 1>
                     <#list 1..productInfoPage.getTotalPages() as index>
-                        <#if currentPage == index>
-                            <li class="disabled"><a href="#">${index}</a></li>
+                        <#if (index-currentPage) gte -2 && (index-currentPage) lte 2>
+                            <#if currentPage == index>
+                                <li class="disabled"><a href="#">${index}</a></li>
+                            <#else>
+                                <li><a href="/sell/seller/product/list?page=${index}&size=${size}">${index}</a></li>
+                            </#if>
                         <#else>
-                            <li><a href="/sell/seller/order/list?page=${index}&size=${size}">${index}</a></li>
+                            <#if leftflag = 1 && (index-currentPage) lt -2>
+                                <#assign leftflag = 0>
+                                <li class="disabled"><a href="#">...</a></li>
+                            </#if>
+                            <#if rightflag = 1 && (index-currentPage) gt 2>
+                                <#assign rightflag = 0>
+                                <li class="disabled"><a href="#">...</a></li>
+                            </#if>
                         </#if>
                     </#list>
 
                     <#if currentPage gte productInfoPage.getTotalPages()>
                         <li class="disabled"><a href="#">下一页</a></li>
                     <#else>
-                        <li><a href="/sell/seller/order/list?page=${currentPage + 1}&size=${size}">下一页</a></li>
+                        <li><a href="/sell/seller/product/list?page=${currentPage + 1}&size=${size}">下一页</a></li>
                     </#if>
                     </ul>
                 </div>

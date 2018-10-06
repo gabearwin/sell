@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
 public class OrderMaster2OrderDTOConverter {
 
     public static OrderDTO convert(OrderMaster orderMaster) {
-
         OrderDTO orderDTO = new OrderDTO();
         BeanUtils.copyProperties(orderMaster, orderDTO);
         return orderDTO;

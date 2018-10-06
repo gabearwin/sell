@@ -47,7 +47,7 @@ public class OrderDTO {
     private Integer payStatus;
 
     /** 创建时间. */
-    @JsonSerialize(using = Date2LongSerializer.class)
+    @JsonSerialize(using = Date2LongSerializer.class) // 返回到前端Json时进行特定的格式转换
     private Date createTime;
 
     /** 更新时间. */

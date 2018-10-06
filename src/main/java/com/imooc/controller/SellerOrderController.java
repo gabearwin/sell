@@ -31,6 +31,7 @@ public class SellerOrderController {
 
     /**
      * 订单列表
+     *
      * @param page 第几页, 从1页开始
      * @param size 一页有多少条数据
      * @return
@@ -44,12 +45,13 @@ public class SellerOrderController {
         map.put("orderDTOPage", orderDTOPage);
         map.put("currentPage", page);
         map.put("size", size);
-//        orderDTOPage.getTotalPages()
+        // orderDTOPage.getTotalPages();
         return new ModelAndView("order/list", map);
     }
 
     /**
      * 取消订单
+     *
      * @param orderId
      * @return
      */
@@ -73,6 +75,7 @@ public class SellerOrderController {
 
     /**
      * 订单详情
+     *
      * @param orderId
      * @param map
      * @return
@@ -83,7 +86,7 @@ public class SellerOrderController {
         OrderDTO orderDTO = new OrderDTO();
         try {
             orderDTO = orderService.findOne(orderId);
-        }catch (SellException e) {
+        } catch (SellException e) {
             log.error("【卖家端查询订单详情】发生异常{}", e);
             map.put("msg", e.getMessage());
             map.put("url", "/sell/seller/order/list");
@@ -96,6 +99,7 @@ public class SellerOrderController {
 
     /**
      * 完结订单
+     *
      * @param orderId
      * @param map
      * @return

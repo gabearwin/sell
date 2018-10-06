@@ -14,13 +14,14 @@ import java.util.concurrent.CopyOnWriteArraySet;
  * Created by 廖师兄
  * 2017-07-30 23:19
  */
-@Component
+// @Component
 @ServerEndpoint("/webSocket")
 @Slf4j
 public class WebSocket {
 
     private Session session;
 
+    // 注意这里不是普通set
     private static CopyOnWriteArraySet<WebSocket> webSocketSet = new CopyOnWriteArraySet<>();
 
     @OnOpen
@@ -42,7 +43,7 @@ public class WebSocket {
     }
 
     public void sendMessage(String message) {
-        for (WebSocket webSocket: webSocketSet) {
+        for (WebSocket webSocket : webSocketSet) {
             log.info("【websocket消息】广播消息, message={}", message);
             try {
                 webSocket.session.getBasicRemote().sendText(message);

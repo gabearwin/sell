@@ -31,8 +31,9 @@ public class SellerAuthorizeAspect {
     private StringRedisTemplate redisTemplate;
 
     @Pointcut("execution(public * com.imooc.controller.Seller*.*(..))" +
-    "&& !execution(public * com.imooc.controller.SellerUserController.*(..))")
-    public void verify() {}
+            "&& !execution(public * com.imooc.controller.SellerUserController.*(..))")
+    public void verify() {
+    }
 
     @Before("verify()")
     public void doVerify() {

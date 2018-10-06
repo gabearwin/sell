@@ -41,6 +41,7 @@ public class SellerProductController {
 
     /**
      * 列表
+     *
      * @param page
      * @param size
      * @param map
@@ -60,6 +61,7 @@ public class SellerProductController {
 
     /**
      * 商品上架
+     *
      * @param productId
      * @param map
      * @return
@@ -78,15 +80,17 @@ public class SellerProductController {
         map.put("url", "/sell/seller/product/list");
         return new ModelAndView("common/success", map);
     }
+
     /**
      * 商品下架
+     *
      * @param productId
      * @param map
      * @return
      */
     @RequestMapping("/off_sale")
     public ModelAndView offSale(@RequestParam("productId") String productId,
-                               Map<String, Object> map) {
+                                Map<String, Object> map) {
         try {
             productService.offSale(productId);
         } catch (SellException e) {
@@ -101,7 +105,7 @@ public class SellerProductController {
 
     @GetMapping("/index")
     public ModelAndView index(@RequestParam(value = "productId", required = false) String productId,
-                      Map<String, Object> map) {
+                              Map<String, Object> map) {
         if (!StringUtils.isEmpty(productId)) {
             ProductInfo productInfo = productService.findOne(productId);
             map.put("productInfo", productInfo);
@@ -116,6 +120,7 @@ public class SellerProductController {
 
     /**
      * 保存/更新
+     *
      * @param form
      * @param bindingResult
      * @param map

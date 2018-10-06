@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 /**
+ * 微信开放平台
  * Created by 廖师兄
  * 2017-07-30 11:05
  */

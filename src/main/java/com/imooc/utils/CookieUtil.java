@@ -14,16 +14,14 @@ import java.util.Map;
 public class CookieUtil {
 
     /**
-     * 设置
-     * @param response
-     * @param name
-     * @param value
-     * @param maxAge
+     * 设置cookie
+     *
+     * @param response 请求返回response
+     * @param name     cookie名字
+     * @param value    cookie值
+     * @param maxAge   过期时间
      */
-    public static void set(HttpServletResponse response,
-                           String name,
-                           String value,
-                           int maxAge) {
+    public static void set(HttpServletResponse response, String name, String value, int maxAge) {
         Cookie cookie = new Cookie(name, value);
         cookie.setPath("/");
         cookie.setMaxAge(maxAge);
@@ -31,23 +29,34 @@ public class CookieUtil {
     }
 
     /**
-     * 获取cookie
-     * @param request
-     * @param name
-     * @return
+     * 通过cookie名字删除cookie
+     *
+     * @param response 请求返回response
+     * @param name     cookie名字
      */
-    public static Cookie get(HttpServletRequest request,
-                           String name) {
+    public static void delete(HttpServletResponse response, String name) {
+        set(response, name, null, 0);
+    }
+
+    /**
+     * 获取cookie
+     *
+     * @param request 请求request
+     * @param name    cookie的名字
+     * @return 由名字得到的cookie
+     */
+    public static Cookie get(HttpServletRequest request, String name) {
         Map<String, Cookie> cookieMap = readCookieMap(request);
         if (cookieMap.containsKey(name)) {
             return cookieMap.get(name);
-        }else {
+        } else {
             return null;
         }
     }
 
     /**
      * 将cookie封装成Map
+     *
      * @param request
      * @return
      */
@@ -55,7 +64,7 @@ public class CookieUtil {
         Map<String, Cookie> cookieMap = new HashMap<>();
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
-            for (Cookie cookie: cookies) {
+            for (Cookie cookie : cookies) {
                 cookieMap.put(cookie.getName(), cookie);
             }
         }

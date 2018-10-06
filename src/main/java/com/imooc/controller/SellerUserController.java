@@ -68,8 +68,8 @@ public class SellerUserController {
 
     @GetMapping("/logout")
     public ModelAndView logout(HttpServletRequest request,
-                       HttpServletResponse response,
-                       Map<String, Object> map) {
+                               HttpServletResponse response,
+                               Map<String, Object> map) {
         //1. 从cookie里查询
         Cookie cookie = CookieUtil.get(request, CookieConstant.TOKEN);
         if (cookie != null) {
@@ -77,7 +77,7 @@ public class SellerUserController {
             redisTemplate.opsForValue().getOperations().delete(String.format(RedisConstant.TOKEN_PREFIX, cookie.getValue()));
 
             //3. 清除cookie
-            CookieUtil.set(response, CookieConstant.TOKEN, null, 0);
+            CookieUtil.delete(response, CookieConstant.TOKEN);
         }
 
         map.put("msg", ResultEnum.LOGOUT_SUCCESS.getMessage());

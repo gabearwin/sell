@@ -27,6 +27,7 @@ public class PayServiceImpl implements PayService {
 
     private static final String ORDER_NAME = "微信点餐订单";
 
+    // 这个bestPayService已经填充好了我们的公众号和商户信息
     @Autowired
     private BestPayServiceImpl bestPayService;
 
@@ -67,7 +68,7 @@ public class PayServiceImpl implements PayService {
             throw new SellException(ResultEnum.ORDER_NOT_EXIST);
         }
 
-        //判断金额是否一致(0.10   0.1)
+        //判断金额是否一致(0.10   0.1) 还有BigDecimal类型容易出现的问题
         if (!MathUtil.equals(payResponse.getOrderAmount(), orderDTO.getOrderAmount().doubleValue())) {
             log.error("【微信支付】异步通知, 订单金额不一致, orderId={}, 微信通知金额={}, 系统金额={}",
                     payResponse.getOrderId(),

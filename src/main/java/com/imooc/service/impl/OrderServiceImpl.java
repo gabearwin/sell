@@ -26,6 +26,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -52,8 +53,8 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private PushMessageService pushMessageService;
 
-    @Autowired
-    private WebSocket webSocket;
+    // @Autowired
+    // private WebSocket webSocket;
 
     @Override
     @Transactional
@@ -62,11 +63,11 @@ public class OrderServiceImpl implements OrderService {
         String orderId = KeyUtil.genUniqueKey();
         BigDecimal orderAmount = new BigDecimal(BigInteger.ZERO);
 
-//        List<CartDTO> cartDTOList = new ArrayList<>();
+        // List<CartDTO> cartDTOList = new ArrayList<>();
 
         //1. 查询商品（数量, 价格）
-        for (OrderDetail orderDetail: orderDTO.getOrderDetailList()) {
-            ProductInfo productInfo =  productService.findOne(orderDetail.getProductId());
+        for (OrderDetail orderDetail : orderDTO.getOrderDetailList()) {
+            ProductInfo productInfo = productService.findOne(orderDetail.getProductId());
             if (productInfo == null) {
                 throw new SellException(ResultEnum.PRODUCT_NOT_EXIST);
             }
@@ -82,8 +83,8 @@ public class OrderServiceImpl implements OrderService {
             BeanUtils.copyProperties(productInfo, orderDetail);
             orderDetailRepository.save(orderDetail);
 
-//            CartDTO cartDTO = new CartDTO(orderDetail.getProductId(), orderDetail.getProductQuantity());
-//            cartDTOList.add(cartDTO);
+            // CartDTO cartDTO = new CartDTO(orderDetail.getProductId(), orderDetail.getProductQuantity());
+            // cartDTOList.add(cartDTO);
         }
 
 
@@ -103,7 +104,7 @@ public class OrderServiceImpl implements OrderService {
         productService.decreaseStock(cartDTOList);
 
         //发送websocket消息
-        webSocket.sendMessage(orderDTO.getOrderId());
+        // webSocket.sendMessage(orderDTO.getOrderId());
 
         return orderDTO;
     }
@@ -169,7 +170,7 @@ public class OrderServiceImpl implements OrderService {
 
         //如果已支付, 需要退款
         if (orderDTO.getPayStatus().equals(PayStatusEnum.SUCCESS.getCode())) {
-            payService.refund(orderDTO);
+            // payService.refund(orderDTO);
         }
 
         return orderDTO;
@@ -195,7 +196,7 @@ public class OrderServiceImpl implements OrderService {
         }
 
         //推送微信模版消息
-        pushMessageService.orderStatus(orderDTO);
+        // pushMessageService.orderStatus(orderDTO);
 
         return orderDTO;
     }

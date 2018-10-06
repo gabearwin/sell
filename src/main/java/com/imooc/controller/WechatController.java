@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 /**
@@ -34,18 +35,20 @@ public class WechatController {
     @Autowired
     private ProjectUrlConfig projectUrlConfig;
 
+    // 第一步：携带要访问的真实URL，去访问授权页，获取code
     @GetMapping("/authorize")
-    public String authorize(@RequestParam("returnUrl") String returnUrl) {
+    public String authorize(@RequestParam("returnUrl") String returnUrl) throws UnsupportedEncodingException {
         //1. 配置
         //2. 调用方法
         String url = projectUrlConfig.getWechatMpAuthorize() + "/sell/wechat/userInfo";
-        String redirectUrl = wxMpService.oauth2buildAuthorizationUrl(url, WxConsts.OAUTH2_SCOPE_BASE, URLEncoder.encode(returnUrl));
+        String redirectUrl = wxMpService.oauth2buildAuthorizationUrl(url, WxConsts.OAUTH2_SCOPE_USER_INFO, URLEncoder.encode(returnUrl, "UTF-8"));
         return "redirect:" + redirectUrl;
     }
 
+    // 第二步：通过code换取accessToken取得openid，然后携带openid访问真实URL
     @GetMapping("/userInfo")
     public String userInfo(@RequestParam("code") String code,
-                         @RequestParam("state") String returnUrl) {
+                           @RequestParam("state") String returnUrl) {
         WxMpOAuth2AccessToken wxMpOAuth2AccessToken = new WxMpOAuth2AccessToken();
         try {
             wxMpOAuth2AccessToken = wxMpService.oauth2getAccessToken(code);
@@ -60,9 +63,9 @@ public class WechatController {
     }
 
     @GetMapping("/qrAuthorize")
-    public String qrAuthorize(@RequestParam("returnUrl") String returnUrl) {
+    public String qrAuthorize(@RequestParam("returnUrl") String returnUrl) throws UnsupportedEncodingException {
         String url = projectUrlConfig.getWechatOpenAuthorize() + "/sell/wechat/qrUserInfo";
-        String redirectUrl = wxOpenService.buildQrConnectUrl(url, WxConsts.QRCONNECT_SCOPE_SNSAPI_LOGIN, URLEncoder.encode(returnUrl));
+        String redirectUrl = wxOpenService.buildQrConnectUrl(url, WxConsts.QRCONNECT_SCOPE_SNSAPI_LOGIN, URLEncoder.encode(returnUrl, "UTF-8"));
         return "redirect:" + redirectUrl;
     }
 

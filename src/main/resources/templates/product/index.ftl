@@ -42,7 +42,7 @@
                                             <#if (productInfo.categoryType)?? && productInfo.categoryType == category.categoryType>
                                                 selected
                                             </#if>
-                                        >${category.categoryName}
+                                    >${category.categoryName}
                                     </option>
                                 </#list>
                             </select>

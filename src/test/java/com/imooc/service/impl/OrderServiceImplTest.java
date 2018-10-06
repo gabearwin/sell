@@ -31,7 +31,7 @@ public class OrderServiceImplTest {
 
     private final String BUYER_OPENID = "1101110";
 
-    private final String ORDER_ID = "1497183332311989948";
+    private final String ORDER_ID = "1538631371996719034";
 
     @Test
     public void create() throws Exception {
@@ -45,7 +45,7 @@ public class OrderServiceImplTest {
         //购物车
         List<OrderDetail> orderDetailList = new ArrayList<>();
         OrderDetail o1 = new OrderDetail();
-        o1.setProductId("1234568");
+        o1.setProductId("123456");
         o1.setProductQuantity(1);
 
         OrderDetail o2 = new OrderDetail();
@@ -71,7 +71,7 @@ public class OrderServiceImplTest {
 
     @Test
     public void findList() throws Exception {
-        PageRequest request = new PageRequest(0,2);
+        PageRequest request = new PageRequest(0, 2);
         Page<OrderDTO> orderDTOPage = orderService.findList(BUYER_OPENID, request);
         Assert.assertNotEquals(0, orderDTOPage.getTotalElements());
     }
@@ -99,9 +99,9 @@ public class OrderServiceImplTest {
 
     @Test
     public void list() {
-        PageRequest request = new PageRequest(0,2);
+        PageRequest request = new PageRequest(0, 2);
         Page<OrderDTO> orderDTOPage = orderService.findList(request);
-//        Assert.assertNotEquals(0, orderDTOPage.getTotalElements());
+        // Assert.assertNotEquals(0, orderDTOPage.getTotalElements());
         Assert.assertTrue("查询所有的订单列表", orderDTOPage.getTotalElements() > 0);
     }
 

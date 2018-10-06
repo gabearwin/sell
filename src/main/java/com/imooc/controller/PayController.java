@@ -38,6 +38,11 @@ public class PayController {
             throw new SellException(ResultEnum.ORDER_NOT_EXIST);
         }
 
+        // 因为个人没有微信支付，所以这里直接拦截请求并默认支付
+        orderService.paid(orderDTO);
+        return new ModelAndView("redirect:" + returnUrl);
+
+        /*
         //2. 发起支付
         PayResponse payResponse = payService.create(orderDTO);
 
@@ -45,6 +50,7 @@ public class PayController {
         map.put("returnUrl", returnUrl);
 
         return new ModelAndView("pay/create", map);
+        */
     }
 
     /**
