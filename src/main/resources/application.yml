@@ -43,3 +43,6 @@ projectUrl:
   wechatMpAuthorize: http://sell.gabear.xyz:8080
   wechatOpenAuthorize: http://sell.gabear.xyz:8080
   sell: http://sell.gabear.xyz:8080
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml

@@ -34,7 +34,7 @@
                             <td>${orderDTO.buyerName}</td>
                             <td>${orderDTO.buyerPhone}</td>
                             <td>${orderDTO.buyerAddress}</td>
-                            <td>${orderDTO.orderAmount}</td>
+                            <td>${orderDTO.orderAmount}元</td>
                             <td>${orderDTO.getOrderStatusEnum().message}</td>
                             <td>${orderDTO.getPayStatusEnum().message}</td>
                             <td>${orderDTO.createTime}</td>

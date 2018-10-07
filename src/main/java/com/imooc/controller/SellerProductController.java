@@ -9,6 +9,7 @@ import com.imooc.service.ProductService;
 import com.imooc.utils.KeyUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
@@ -127,6 +128,8 @@ public class SellerProductController {
      * @return
      */
     @PostMapping("/save")
+    // @CachePut(cacheNames = "product", key = "123") // 更新缓存。缓存对象必须实现序列化。
+    // @CacheEvict(cacheNames = "allProduct", key = "'allProductList'") // 清除缓存
     public ModelAndView save(@Valid ProductForm form,
                              BindingResult bindingResult,
                              Map<String, Object> map) {

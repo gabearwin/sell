@@ -18,6 +18,7 @@ import java.util.Map;
 @Slf4j
 public class ProductCategoryMapperTest {
 
+    // mapper注入编辑器会报错，但是实际上没问题
     @Autowired
     private ProductCategoryMapper mapper;
 
@@ -71,6 +72,12 @@ public class ProductCategoryMapperTest {
     public void deleteByCategoryType() {
         int result = mapper.deleteByCategoryType(102);
         Assert.assertEquals(1, result);
+    }
+
+    @Test
+    public void selectByCategoryType() {
+        ProductCategory productCategory = mapper.selectByCategoryType(101);
+        Assert.assertNotNull(productCategory);
     }
 
 }

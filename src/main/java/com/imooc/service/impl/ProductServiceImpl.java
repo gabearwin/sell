@@ -8,6 +8,9 @@ import com.imooc.exception.SellException;
 import com.imooc.repository.ProductInfoRepository;
 import com.imooc.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -20,12 +23,16 @@ import java.util.List;
  * 2017-05-09 17:31
  */
 @Service
+// @CacheConfig(cacheNames = "oneProduct")
+// 这里的findOne和save方法的缓存只是一个例子，实际项目中按照需要来缓存。
+// 而且注意查询接口缓存了数据，那么所有增删改的接口操作完之后都需要更新缓存，像下面的save/increaseStock/decreaseStock/onSale/offSale
 public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductInfoRepository repository;
 
     @Override
+    // @Cacheable(key = "#productId")
     public ProductInfo findOne(String productId) {
         return repository.findOne(productId);
     }
@@ -41,6 +48,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    // @CachePut(key = "#productInfo.productId")
     public ProductInfo save(ProductInfo productInfo) {
         return repository.save(productInfo);
     }

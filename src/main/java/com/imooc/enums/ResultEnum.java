@@ -19,7 +19,7 @@ public enum ResultEnum {
 
     ORDER_NOT_EXIST(12, "订单不存在"),
 
-    ORDERDETAIL_NOT_EXIST(13, "订单详情不存在"),
+    ORDER_DETAIL_NOT_EXIST(13, "订单详情不存在"),
 
     ORDER_STATUS_ERROR(14, "订单状态不正确"),
 
@@ -46,6 +46,9 @@ public enum ResultEnum {
     LOGIN_FAIL(25, "登录失败, 登录信息不正确"),
 
     LOGOUT_SUCCESS(26, "登出成功"),
+
+    // 并发情况下创建订单，会对每一个商品用Redis加锁，获取锁失败会抛出异常
+    CONCURRENT_PROCESSING_ERROR(100, "手速太快？请重试！"),
     ;
 
     private Integer code;
